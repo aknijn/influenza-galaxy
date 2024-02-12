@@ -1,0 +1,84 @@
+<tool id="irma" name="IRMA" version="1.0">
+    <description>Iterative Refinement Meta-Assembler</description>
+    <requirements>
+        <requirement type="package" version="1.0.3">irma</requirement>
+    </requirements>
+    <!-- basic error handling -->
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Tool exception" />
+    </stdio>
+    <command>
+<![CDATA[
+    #import os
+    #import subprocess
+    #if str( $input_pc.forward.name ) == "dummy.fastq" or str( $input_pc.reverse.name ) == "dummy.fastq":
+      #if str( $input_pc.forward.name ).lower().endswith(".fasta") or str( $input_pc.reverse.name ).lower().endswith(".fasta"):
+        #if os.stat( str($input_pc.forward) ).st_size < 6000 and os.stat( str($input_pc.reverse) ).st_size < 6000:
+          #set $library = "sang"
+        #else:
+          #set $library = "cons"
+        #end if
+      #else:
+        #if str( $input_pc.forward.name ).lower().endswith(".fast5") or str( $input_pc.reverse.name ).lower().endswith(".fast5"):
+          #set $library = "nano"
+		  #set $module = "FLU-minion"
+        #else:
+          #if str( $input_pc.reverse.name ) == "dummy.fastq":
+            #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
+			#set $sequences = "${input_pc.forward}"
+          #else:
+            #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.reverse) + ' | wc -L')
+			#set $sequences = "${input_pc.reverse}"
+          #end if
+          #if int($seqlen) > 800:
+            #set $library = "nano"
+			#set $module = "FLU-minion"
+          #else:
+            #set $library = "iont"
+			#set $module = "FLU"
+          #end if
+        #end if
+      #end if
+    #else:
+      #set $library = "illu"
+	  #set $module = "FLU"
+	  #set $sequences = "${input_pc.forward} ${input_pc.reverse}"
+    #end if
+    echo $library > $librarytype &&
+
+    #if not (($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1))):
+    python 
+      $__tool_directory__/IRMA.py --irma "IRMA $module $sequences outdir" --sequenced_region $sequenced_region
+          --consensus_HA $consensus_HA
+          --consensus_NA $consensus_NA
+          --consensus_MP $consensus_MP
+          --consensus_PB1 $consensus_PB1
+          --consensus_PB2 $consensus_PB2
+          --consensus_PA $consensus_PA
+          --consensus_NP $consensus_NP
+          --consensus_NS $consensus_NS
+    #end if
+
+]]>
+    </command>
+
+    <inputs>
+        <param name="strain" type="text" label="Set output FASTA ID with Strain name" />
+        <param name="input_pc" type="data_collection"  format="fastqsanger" collection_type="paired" label="Paired-end FASTQ collection" help="Must be of datatype &quot;fastqsanger&quot;" optional="false" />
+    </inputs>
+
+    </inputs>
+    <!-- define outputs -->
+    <outputs>
+       <data name="librarytype" format="txt" label="${tool.name} on ${on_string}: library type" />
+       <data name="sequenced_region" format="txt" label="${tool.name} on ${on_string}: sequenced region" />
+       <data format="fasta" name="consensus_HA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for HA" />
+       <data format="fasta" name="consensus_NA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NA" />
+       <data format="fasta" name="consensus_MP" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for MP" />
+       <data format="fasta" name="consensus_PB1" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PB1" />
+       <data format="fasta" name="consensus_PB2" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PB2" />
+       <data format="fasta" name="consensus_PA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PA" />
+       <data format="fasta" name="consensus_NP" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NP" />
+       <data format="fasta" name="consensus_NS" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NS" />
+    </outputs>
+</tool>
