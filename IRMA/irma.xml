@@ -67,8 +67,6 @@
         <param name="input_pc" type="data_collection"  format="fastqsanger" collection_type="paired" label="Paired-end FASTQ collection" help="Must be of datatype &quot;fastqsanger&quot;" optional="false" />
     </inputs>
 
-    </inputs>
-    <!-- define outputs -->
     <outputs>
        <data name="librarytype" format="txt" label="${tool.name} on ${on_string}: library type" />
        <data name="sequenced_region" format="txt" label="${tool.name} on ${on_string}: sequenced region" />
