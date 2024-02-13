@@ -51,6 +51,7 @@ def main():
             report_data["qc_status"] = 'Failed'
         else:
             report_data["qc_status"] = 'Passed'
+        report_data["notifica"] = '-'
 
     finally:
         report = open(args.recovery_json, 'w')
