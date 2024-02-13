@@ -25,10 +25,10 @@
         #else:
           #if str( $input_pc.reverse.name ) == "dummy.fastq":
             #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
-            #set $sequences = "${input_pc.forward}"
+            #set $sequences = ${input_pc.forward}
           #else:
             #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.reverse) + ' | wc -L')
-            #set $sequences = "${input_pc.reverse}"
+            #set $sequences = ${input_pc.reverse}
           #end if
           #if int($seqlen) > 800:
             #set $library = "nano"
@@ -42,7 +42,7 @@
     #else:
       #set $library = "illu"
       #set $module = "FLU"
-      #set $sequences = "${input_pc.forward} ${input_pc.reverse}"
+      #set $sequences = ${input_pc.forward} + " " + ${input_pc.reverse}
     #end if
     echo $library > $librarytype &&
 
