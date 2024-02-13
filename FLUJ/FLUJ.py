@@ -47,7 +47,7 @@ def main():
             report_data["sequence"] = "Consensus"
 
         report_data["sequenced_region"] = open(args.sequenced_region).readline().rstrip()
-        if report_data["sequenced_region"] != 'All':
+        if report_data["sequenced_region"] != 'ALL':
             report_data["qc_status"] = 'Failed'
         else:
             report_data["qc_status"] = 'Passed'
