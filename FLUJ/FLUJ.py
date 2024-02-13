@@ -24,7 +24,7 @@ def main():
     parser.add_argument('--region', dest='region', help='region')
     parser.add_argument('--year', dest='year', help='year')
     parser.add_argument('--sequenced_region', dest='sequenced_region', help='sequenced_region')
-    parser.add_argument('--recovery_json', dest='recovery_json', help='output json')
+    parser.add_argument('--flu_json', dest='flu_json', help='output json')
     
     args = parser.parse_args()
     try:
@@ -54,7 +54,7 @@ def main():
         report_data["notifica"] = '-'
 
     finally:
-        report = open(args.recovery_json, 'w')
+        report = open(args.flu_json, 'w')
         report.write("[" + json.dumps(report_data) + "]")
         report.close()
 
