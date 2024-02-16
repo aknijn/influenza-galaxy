@@ -14,7 +14,7 @@
       --strain $strain --librarytype $librarytype
       --region '$region' --year $year
       --sequenced_region $sequenced_region
-      --flu_json $flu_type
+      --flu_json $fluflow_type
 ]]>
     </command>
 
