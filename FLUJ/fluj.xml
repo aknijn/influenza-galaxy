@@ -27,6 +27,6 @@
    </inputs>
 
     <outputs>
-        <data format="json" name="flu_type" label="flu_type" ></data>
+        <data format="json" name="fluflow_type" label="fluflow_type" ></data>
    </outputs>
 </tool>
