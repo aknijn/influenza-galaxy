@@ -49,7 +49,7 @@ def main():
         if os.path.getsize(args.irma_json) != 0:
             with open(args.irma_json, "rb") as irma_infile:
                 report_data.update(json.load(irma_infile))
-       if report_data["sequenced_region"] != 'ALL':
+        if report_data["sequenced_region"] != 'ALL':
             report_data["qc_status"] = 'Failed'
         else:
             report_data["qc_status"] = 'Passed'
