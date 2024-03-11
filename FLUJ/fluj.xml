@@ -23,7 +23,6 @@
         <param name="region" type="text" label="Sample Region" />
         <param name="year" type="text" label="Sample Year" />
         <param name="librarytype" format="txt" type="data" label="library type" />
-        <param name="sequenced_region" format="txt" type="data" label="sequenced_region" />
         <param name="irma_json" format="json" type="data" label="irma_json" />
    </inputs>
 
