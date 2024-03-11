@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--librarytype', dest='librarytype', help='library type')
     parser.add_argument('--region', dest='region', help='region')
     parser.add_argument('--year', dest='year', help='year')
-    parser.add_argument('--sequenced_region', dest='sequenced_region', help='sequenced_region')
+    parser.add_argument('--irma_json', dest='irma_json', help='irma json')
     parser.add_argument('--flu_json', dest='flu_json', help='output json')
     
     args = parser.parse_args()
@@ -46,8 +46,10 @@ def main():
         elif library == 'cons':
             report_data["sequence"] = "Consensus"
 
-        report_data["sequenced_region"] = open(args.sequenced_region).readline().rstrip()
-        if report_data["sequenced_region"] != 'ALL':
+        if os.path.getsize(args.irma_json) != 0:
+            with open(args.irma_json, "rb") as irma_infile:
+                report_data.update(json.load(irma_infile))
+       if report_data["sequenced_region"] != 'ALL':
             report_data["qc_status"] = 'Failed'
         else:
             report_data["qc_status"] = 'Passed'

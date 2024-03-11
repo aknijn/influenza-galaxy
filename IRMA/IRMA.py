@@ -13,13 +13,19 @@ import sys
 import os
 import shutil
 import subprocess
+import json
 
-TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
+def get_subtype(input_file):
+    subtype = "ND"
+    if os.path.isfile(input_file):
+        with open(input_file) as infile:
+            subtype = infile.readline().strip()[-2:]
+    return subtype
 
 def __main__():
     parser = argparse.ArgumentParser()
     parser.add_argument('--irma', dest='irma', help='irma command')
-    parser.add_argument('--sequenced_region', dest='sequenced_region', help='sequenced_region')
+    parser.add_argument('--irma_json', dest='irma_json', help='irma_json')
     parser.add_argument('--consensus_HA', dest='consensus_HA', help='consensus_HA')
     parser.add_argument('--consensus_NA', dest='consensus_NA', help='consensus_NA')
     parser.add_argument('--consensus_MP', dest='consensus_MP', help='consensus_MP')
@@ -32,7 +38,7 @@ def __main__():
     args = parser.parse_args()
     subprocess.run(args.irma, shell=True)
 
-    # copy fasta files and create the sequenced_region string
+    # copy fasta files and create the irma_json file
     sequenced_region_list = []
     if os.path.isfile('outdir/A_HA_H3.fasta'):
         sequenced_region_list.append('HA')
@@ -40,6 +46,7 @@ def __main__():
     if os.path.isfile('outdir/A_NA_N2.fasta'):
         sequenced_region_list.append('NA')
         shutil.copy('outdir/A_NA_N2.fasta', args.consensus_NA)
+        influenza_type_str = 'A'
     if os.path.isfile('outdir/A_MP.fasta'):
         sequenced_region_list.append('MP')
         shutil.copy('outdir/A_MP.fasta', args.consensus_MP)
@@ -64,6 +71,7 @@ def __main__():
     if os.path.isfile('outdir/B_NA_N2.fasta'):
         sequenced_region_list.append('NA')
         shutil.copy('outdir/B_NA_N2.fasta', args.consensus_NA)
+        influenza_type_str = 'B'
     if os.path.isfile('outdir/B_MP.fasta'):
         sequenced_region_list.append('MP')
         shutil.copy('outdir/B_MP.fasta', args.consensus_MP)
@@ -89,8 +97,20 @@ def __main__():
         sequenced_region_str = "-"
     else:
         sequenced_region_str = ','.join(sequenced_region_list)
-    with open(args.sequenced_region, "w") as sequenced_region_file:
-        sequenced_region_file.write(sequenced_region_str)
+    h_subtype_str = get_subtype(args.consensus_HA)
+    n_subtype_str = get_subtype(args.consensus_NA)
+   
+    try:
+        report_data = {}
+        # prepare JSON output file
+        report_data["sequenced_region"] = sequenced_region_str
+        report_data["influenza_type"] = influenza_type_str
+        report_data["h_subtype"] = h_subtype_str
+        report_data["n_subtype"] = n_subtype_str
+    finally:
+        report = open(args.irma_json, 'w')
+        report.write(json.dumps(report_data))
+        report.close()
 
 if __name__ == "__main__":
     __main__()

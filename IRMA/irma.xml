@@ -24,10 +24,10 @@
           #set $module = "FLU-minion"
         #else:
           #if str( $input_pc.reverse.name ) == "dummy.fastq":
-            #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
+            #set $seqlen = subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
             #set $sequences = $input_pc.forward
           #else:
-            #set $seqlen = $subprocess.getoutput('head -n 10000 ' + str($input_pc.reverse) + ' | wc -L')
+            #set $seqlen = subprocess.getoutput('head -n 10000 ' + str($input_pc.reverse) + ' | wc -L')
             #set $sequences = $input_pc.reverse
           #end if
           #if int($seqlen) > 800:
@@ -48,7 +48,7 @@
 
     #if not (($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1))):
     python 
-      $__tool_directory__/IRMA.py --irma "IRMA $module $sequences outdir" --sequenced_region $sequenced_region
+      $__tool_directory__/IRMA.py --irma "IRMA $module $sequences outdir" --irma_json $irma_json
           --consensus_HA $consensus_HA
           --consensus_NA $consensus_NA
           --consensus_MP $consensus_MP
@@ -69,7 +69,7 @@
 
     <outputs>
        <data name="librarytype" format="txt" label="${tool.name} on ${on_string}: library type" />
-       <data name="sequenced_region" format="txt" label="${tool.name} on ${on_string}: sequenced region" />
+       <data name="irma_json" format="json" label="${tool.name} on ${on_string}: irma json" />
        <data format="fasta" name="consensus_HA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for HA" />
        <data format="fasta" name="consensus_NA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NA" />
        <data format="fasta" name="consensus_MP" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for MP" />

@@ -13,7 +13,7 @@
       $__tool_directory__/FLUJ.py
       --strain $strain --librarytype $librarytype
       --region '$region' --year $year
-      --sequenced_region $sequenced_region
+	  --irma_json $irma_json
       --flu_json $fluflow_type
 ]]>
     </command>
@@ -24,6 +24,7 @@
         <param name="year" type="text" label="Sample Year" />
         <param name="librarytype" format="txt" type="data" label="library type" />
         <param name="sequenced_region" format="txt" type="data" label="sequenced_region" />
+        <param name="irma_json" format="json" type="data" label="irma_json" />
    </inputs>
 
     <outputs>
