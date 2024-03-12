@@ -14,12 +14,17 @@ import os
 import shutil
 import subprocess
 import json
+import glob
 
 def get_subtype(input_file):
     subtype = "ND"
-    if os.path.isfile(input_file):
+    if os.stat(input_file).st_size > 0:
         with open(input_file) as infile:
             subtype = infile.readline().strip()[-2:]
+            if subtype == 'NA':
+                subtype = 'N?'
+            elif subtype == 'HA':
+                subtype = 'H?'
     return subtype
 
 def __main__():
@@ -39,18 +44,21 @@ def __main__():
     subprocess.run(args.irma, shell=True)
 
     # copy fasta files and create the irma_json file
-    influenza_type_str = '-'
+    influenza_type_str = 'ND'
     sequenced_region_list = []
-    if os.path.isfile('outdir/A_HA_H3.fasta'):
+
+    consensus_HA = glob.glob('outdir/?_HA*.fasta')
+    if os.path.isfile(consensus_HA[0]):
         sequenced_region_list.append('HA')
-        shutil.copy('outdir/A_HA_H3.fasta', args.consensus_HA)
-    if os.path.isfile('outdir/A_NA_N2.fasta'):
+        shutil.copy(consensus_HA[0], args.consensus_HA)
+    consensus_NA = glob.glob('outdir/?_NA*.fasta')
+    if os.path.isfile(consensus_NA[0]):
         sequenced_region_list.append('NA')
-        shutil.copy('outdir/A_NA_N2.fasta', args.consensus_NA)
-        influenza_type_str = 'A'
+        shutil.copy(consensus_NA[0], args.consensus_NA)
     if os.path.isfile('outdir/A_MP.fasta'):
         sequenced_region_list.append('MP')
         shutil.copy('outdir/A_MP.fasta', args.consensus_MP)
+        influenza_type_str = 'A'
     if os.path.isfile('outdir/A_PB1.fasta'):
         sequenced_region_list.append('PB1')
         shutil.copy('outdir/A_PB1.fasta', args.consensus_PB1)
@@ -66,16 +74,10 @@ def __main__():
     if os.path.isfile('outdir/A_NS.fasta'):
         sequenced_region_list.append('NS')
         shutil.copy('outdir/A_NS.fasta', args.consensus_NS)
-    if os.path.isfile('outdir/B_HA_H3.fasta'):
-        sequenced_region_list.append('HA')
-        shutil.copy('outdir/B_HA_H3.fasta', args.consensus_HA)
-    if os.path.isfile('outdir/B_NA_N2.fasta'):
-        sequenced_region_list.append('NA')
-        shutil.copy('outdir/B_NA_N2.fasta', args.consensus_NA)
-        influenza_type_str = 'B'
     if os.path.isfile('outdir/B_MP.fasta'):
         sequenced_region_list.append('MP')
         shutil.copy('outdir/B_MP.fasta', args.consensus_MP)
+        influenza_type_str = 'B'
     if os.path.isfile('outdir/B_PB1.fasta'):
         sequenced_region_list.append('PB1')
         shutil.copy('outdir/B_PB1.fasta', args.consensus_PB1)
@@ -95,7 +97,7 @@ def __main__():
     if len(sequenced_region_list) == 8:
         sequenced_region_str = "ALL"
     elif len(sequenced_region_list) == 0:
-        sequenced_region_str = "-"
+        sequenced_region_str = "ND"
     else:
         sequenced_region_str = ','.join(sequenced_region_list)
     h_subtype_str = get_subtype(args.consensus_HA)
