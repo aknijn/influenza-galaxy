@@ -39,6 +39,7 @@ def __main__():
     subprocess.run(args.irma, shell=True)
 
     # copy fasta files and create the irma_json file
+    influenza_type_str = '-'
     sequenced_region_list = []
     if os.path.isfile('outdir/A_HA_H3.fasta'):
         sequenced_region_list.append('HA')
