@@ -42,7 +42,7 @@
     #else:
       #set $library = "illu"
       #set $module = "FLU"
-      #set $sequences = $input_pc.forward + " " + $input_pc.reverse
+      #set $sequences = ${input_pc.forward} + " " + ${input_pc.reverse}
     #end if
     echo $library > $librarytype &&
 
