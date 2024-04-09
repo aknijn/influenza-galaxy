@@ -20,11 +20,18 @@ def get_subtype(input_file):
     subtype = "ND"
     if os.stat(input_file).st_size > 0:
         with open(input_file) as infile:
-            subtype = infile.readline().strip()[-2:]
+            firstline = infile.readline().strip()
+            subtype = firstline[-2:]
             if subtype == 'NA':
-                subtype = 'N?'
+                if firstline[1] == 'A':
+                    subtype = 'N?'
+                else:
+                    subtype = 'N'
             elif subtype == 'HA':
-                subtype = 'H?'
+                if firstline[1] == 'A':
+                    subtype = 'H?'
+                else:
+                    subtype = 'H'
     return subtype
 
 def __main__():
