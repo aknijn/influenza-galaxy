@@ -10,55 +10,74 @@
     </stdio>
     <command>
 <![CDATA[
-      IRMA $module $input1
-      #if str( $library.type ) == "paired":
-          $input2
+    #import os
+    #import subprocess
+    #if str( $input_pc.forward.name ) == "dummy.fastq" or str( $input_pc.reverse.name ) == "dummy.fastq":
+      #if str( $input_pc.forward.name ).lower().endswith(".fasta") or str( $input_pc.reverse.name ).lower().endswith(".fasta"):
+        #if os.stat( str($input_pc.forward) ).st_size < 6000 and os.stat( str($input_pc.reverse) ).st_size < 6000:
+          #set $library = "sang"
+        #else:
+          #set $library = "cons"
+        #end if
+      #else:
+        #if str( $input_pc.forward.name ).lower().endswith(".fast5") or str( $input_pc.reverse.name ).lower().endswith(".fast5"):
+          #set $library = "nano"
+          #set $module = "FLU-minion"
+        #else:
+          #if str( $input_pc.reverse.name ) == "dummy.fastq":
+            #set $seqlen = subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
+            #set $sequences = $input_pc.forward
+          #else:
+            #set $seqlen = subprocess.getoutput('head -n 10000 ' + str($input_pc.reverse) + ' | wc -L')
+            #set $sequences = $input_pc.reverse
+          #end if
+          #if int($seqlen) > 800:
+            #set $library = "nano"
+            #set $module = "FLU-minion"
+          #else:
+            #set $library = "iont"
+            #set $module = "FLU"
+          #end if
+        #end if
       #end if
-        outdir
+    #else:
+      #set $library = "illu"
+      #set $module = "FLU"
+      #set $sequences = str($input_pc.forward) + " " + str($input_pc.reverse)
+    #end if
+    echo $library > $librarytype &&
+
+    #if not (($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1))):
+    python 
+      $__tool_directory__/IRMA.py --irma "IRMA $module $sequences outdir" --irma_json $irma_json
+          --consensus_HA $consensus_HA
+          --consensus_NA $consensus_NA
+          --consensus_MP $consensus_MP
+          --consensus_PB1 $consensus_PB1
+          --consensus_PB2 $consensus_PB2
+          --consensus_PA $consensus_PA
+          --consensus_NP $consensus_NP
+          --consensus_NS $consensus_NS
+    #end if
+
 ]]>
     </command>
 
     <inputs>
-        <!-- single/paired -->
-        <conditional name="library">
-            <param name="type" type="select" label="Is this a single-end or paired-end library">
-              <option value="single">Single-end</option>
-              <option value="paired" selected="true">Paired-end</option>
-            </param>
-            <when value="single">
-                <param name="input1" format="fastqsanger" type="data" label="FASTQ file" help="Must be of datatype &quot;fastqsanger&quot;" />
-            </when>
-            <when value="paired">
-                <param name="input1" format="fastqsanger" type="data" label="FASTQ file #1" help="Must be of datatype &quot;fastqsanger&quot;" />
-                <param name="input2" format="fastqsanger" type="data" label="FASTQ file #2" help="Must be of datatype &quot;fastqsanger&quot;" />
-            </when>
-        </conditional>
-        <param name="module" type="select" label="Which module do you want to run?">
-          <option value="FLU" selected="true">FLU</option>
-          <option value="FLU_AD" selected="true">FLU_AD</option>
-          <option value="EBOLA">EBOLA</option>
-          <option value="CoV">CoV</option>
-          <option value="FLU-utr">FLU-utr</option>
-        </param>
+        <param name="strain" type="text" label="Set output FASTA ID with Strain name" />
+        <param name="input_pc" type="data_collection"  format="fastqsanger" collection_type="paired" label="Paired-end FASTQ collection" help="Must be of datatype &quot;fastqsanger&quot;" optional="false" />
     </inputs>
-    <!-- define outputs -->
-    <outputs>
-        <collection name="list_fasta" type="list" label="${tool.name} on ${on_string}: Final assembled plurality consensus">
-          <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fasta" format="fasta" directory="outdir" visible="false" />
-        </collection>
-        <collection name="list_bam" type="list" label="${tool.name} on ${on_string}: Sorted BAM files">
-          <discover_datasets directory="outdir" pattern="(?P&lt;designation&gt;.+)\.bam" format="qname_sorted.bam" visible="false" />
-        </collection>
-        <data format="txt" name="run_info" from_work_dir="outdir/logs/run_info.txt" label="${tool.name} on ${on_string}: run info" />
-    </outputs>
 
-    <help>
-**IRMA Overview**
-IRMA was designed for the robust assembly, variant calling, and phasing of highly variable RNA viruses. 
-Currently IRMA is deployed with modules for influenza, ebolavirus and coronavirus. 
-IRMA is free to use and parallelizes computations for both cluster computing and single computer multi-core setups.
-    </help>
-    <citations>
-      <citation type="doi">10.1186/s12864-016-3030-6</citation>
-    </citations>
+    <outputs>
+       <data name="librarytype" format="txt" label="${tool.name} on ${on_string}: library type" />
+       <data name="irma_json" format="json" label="${tool.name} on ${on_string}: irma json" />
+       <data format="fasta" name="consensus_HA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for HA" />
+       <data format="fasta" name="consensus_NA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NA" />
+       <data format="fasta" name="consensus_MP" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for MP" />
+       <data format="fasta" name="consensus_PB1" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PB1" />
+       <data format="fasta" name="consensus_PB2" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PB2" />
+       <data format="fasta" name="consensus_PA" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for PA" />
+       <data format="fasta" name="consensus_NP" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NP" />
+       <data format="fasta" name="consensus_NS" label="${tool.name} on ${on_string}: Final assembled plurality consensus (no mixed base calls) for NS" />
+    </outputs>
 </tool>
