@@ -1,0 +1,64 @@
+<tool id="irma" name="IRMA" version="2.0">
+    <description>Iterative Refinement Meta-Assembler</description>
+    <requirements>
+        <requirement type="package" version="1.0.3">irma</requirement>
+        <requirement type="package" version="5.32">perl</requirement>
+    </requirements>
+    <!-- basic error handling -->
+    <stdio>
+        <exit_code range="1:" level="fatal" description="Tool exception" />
+    </stdio>
+    <command>
+<![CDATA[
+      IRMA $module $input1
+      #if str( $library.type ) == "paired":
+          $input2
+      #end if
+        outdir
+]]>
+    </command>
+
+    <inputs>
+        <!-- single/paired -->
+        <conditional name="library">
+            <param name="type" type="select" label="Is this a single-end or paired-end library">
+              <option value="single">Single-end</option>
+              <option value="paired" selected="true">Paired-end</option>
+            </param>
+            <when value="single">
+                <param name="input1" format="fastqsanger" type="data" label="FASTQ file" help="Must be of datatype &quot;fastqsanger&quot;" />
+            </when>
+            <when value="paired">
+                <param name="input1" format="fastqsanger" type="data" label="FASTQ file #1" help="Must be of datatype &quot;fastqsanger&quot;" />
+                <param name="input2" format="fastqsanger" type="data" label="FASTQ file #2" help="Must be of datatype &quot;fastqsanger&quot;" />
+            </when>
+        </conditional>
+        <param name="module" type="select" label="Which module do you want to run?">
+          <option value="FLU" selected="true">FLU</option>
+          <option value="FLU_AD" selected="true">FLU_AD</option>
+          <option value="EBOLA">EBOLA</option>
+          <option value="CoV">CoV</option>
+          <option value="FLU-utr">FLU-utr</option>
+        </param>
+    </inputs>
+    <!-- define outputs -->
+    <outputs>
+        <collection name="list_fasta" type="list" label="${tool.name} on ${on_string}: Final assembled plurality consensus">
+          <discover_datasets pattern="(?P&lt;designation&gt;.+)\.fasta" format="fasta" directory="outdir" visible="false" />
+        </collection>
+        <collection name="list_bam" type="list" label="${tool.name} on ${on_string}: Sorted BAM files">
+          <discover_datasets directory="outdir" pattern="(?P&lt;designation&gt;.+)\.bam" format="qname_sorted.bam" visible="false" />
+        </collection>
+        <data format="txt" name="run_info" from_work_dir="outdir/logs/run_info.txt" label="${tool.name} on ${on_string}: run info" />
+    </outputs>
+
+    <help>
+**IRMA Overview**
+IRMA was designed for the robust assembly, variant calling, and phasing of highly variable RNA viruses. 
+Currently IRMA is deployed with modules for influenza, ebolavirus and coronavirus. 
+IRMA is free to use and parallelizes computations for both cluster computing and single computer multi-core setups.
+    </help>
+    <citations>
+      <citation type="doi">10.1186/s12864-016-3030-6</citation>
+    </citations>
+</tool>
