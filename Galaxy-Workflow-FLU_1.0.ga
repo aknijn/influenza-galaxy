@@ -1,0 +1,451 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "mapping final consenus with Minimap2 to SARS-CoV-2 reference sequence",
+    "format-version": "0.1",
+    "name": "FLU 1.0",
+    "steps": {
+        "0": {
+            "annotation": "",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "",
+                    "name": "input_collection"
+                }
+            ],
+            "label": "input_collection",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "bottom": 667.1999969482422,
+                "height": 61.19999694824219,
+                "left": 326.5,
+                "right": 526.5,
+                "top": 606,
+                "width": 200,
+                "x": 326.5,
+                "y": 606
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list:paired\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "12284abd-0768-4db4-a2ec-e2f9932fc45c",
+            "workflow_outputs": []
+        },
+        "1": {
+            "annotation": "",
+            "content_id": "irma",
+            "errors": null,
+            "id": 1,
+            "input_connections": {
+                "input_pc": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool IRMA",
+                    "name": "input_pc"
+                }
+            ],
+            "label": null,
+            "name": "IRMA",
+            "outputs": [
+                {
+                    "name": "librarytype",
+                    "type": "txt"
+                },
+                {
+                    "name": "irma_json",
+                    "type": "json"
+                },
+                {
+                    "name": "consensus_HA",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_NA",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_MP",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_PB1",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_PB2",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_PA",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_NP",
+                    "type": "fasta"
+                },
+                {
+                    "name": "consensus_NS",
+                    "type": "fasta"
+                }
+            ],
+            "position": {
+                "bottom": 1086.2000274658203,
+                "height": 896.4000244140625,
+                "left": 642.2666625976562,
+                "right": 842.2666625976562,
+                "top": 189.8000030517578,
+                "width": 200,
+                "x": 642.2666625976562,
+                "y": 189.8000030517578
+            },
+            "post_job_actions": {
+                "ChangeDatatypeActionconsensus_HA": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_HA"
+                },
+                "ChangeDatatypeActionconsensus_MP": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_MP"
+                },
+                "ChangeDatatypeActionconsensus_NA": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_NA"
+                },
+                "ChangeDatatypeActionconsensus_NP": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_NP"
+                },
+                "ChangeDatatypeActionconsensus_NS": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_NS"
+                },
+                "ChangeDatatypeActionconsensus_PA": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_PA"
+                },
+                "ChangeDatatypeActionconsensus_PB1": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_PB1"
+                },
+                "ChangeDatatypeActionconsensus_PB2": {
+                    "action_arguments": {
+                        "newtype": "fasta"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "consensus_PB2"
+                },
+                "RenameDatasetActionconsensus_HA": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_ha.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_HA"
+                },
+                "RenameDatasetActionconsensus_MP": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_mp.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_MP"
+                },
+                "RenameDatasetActionconsensus_NA": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_na.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_NA"
+                },
+                "RenameDatasetActionconsensus_NP": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_np.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_NP"
+                },
+                "RenameDatasetActionconsensus_NS": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_ns.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_NS"
+                },
+                "RenameDatasetActionconsensus_PA": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_pa.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_PA"
+                },
+                "RenameDatasetActionconsensus_PB1": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_pb1.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_PB1"
+                },
+                "RenameDatasetActionconsensus_PB2": {
+                    "action_arguments": {
+                        "newname": "fluflow_consensus_pb2.fasta"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "consensus_PB2"
+                }
+            },
+            "tool_id": "irma",
+            "tool_state": "{\"input_pc\": {\"__class__\": \"RuntimeValue\"}, \"strain\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2.0",
+            "type": "tool",
+            "uuid": "4c2901ca-eb38-4eee-8a0e-eb563510dca8",
+            "workflow_outputs": [
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for NP",
+                    "output_name": "consensus_NP",
+                    "uuid": "0bfc4df5-37ee-4035-8bd5-8cd67e538e53"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for MP",
+                    "output_name": "consensus_MP",
+                    "uuid": "2c6b57d5-b278-4f41-81d5-396bd539be51"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for PB1",
+                    "output_name": "consensus_PB1",
+                    "uuid": "9a1f073d-be67-4f37-aa3b-a17dea689615"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for PB2",
+                    "output_name": "consensus_PB2",
+                    "uuid": "e7acc7a1-77b4-4611-8f7a-76323d1c1afd"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for PA",
+                    "output_name": "consensus_PA",
+                    "uuid": "8539d120-b9ea-408b-8015-2775a0da2747"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for NS",
+                    "output_name": "consensus_NS",
+                    "uuid": "94e94f24-af05-4cec-bfdf-e385778acdec"
+                },
+                {
+                    "label": "IRMA on input dataset(s): library type",
+                    "output_name": "librarytype",
+                    "uuid": "00d62c2a-e222-4873-bd33-40af54e23de4"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for HA",
+                    "output_name": "consensus_HA",
+                    "uuid": "01dd5d63-3784-4c0a-8fe8-dabf58d54a90"
+                },
+                {
+                    "label": "IRMA on input dataset(s): Final assembled plurality consensus (no mixed base calls) for NA",
+                    "output_name": "consensus_NA",
+                    "uuid": "44346300-3ab7-4429-b875-6d315d0cce3f"
+                },
+                {
+                    "label": null,
+                    "output_name": "irma_json",
+                    "uuid": "c642712c-e96d-4df6-889a-ceebe47727ca"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/nml/collapse_collections/collapse_dataset/5.1.0",
+            "errors": null,
+            "id": 2,
+            "input_connections": {
+                "input_list": {
+                    "id": 1,
+                    "output_name": "librarytype"
+                }
+            },
+            "inputs": [],
+            "label": "Library type",
+            "name": "Collapse Collection",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "bottom": 214.8000030517578,
+                "height": 112.80000305175781,
+                "left": 1131.2333984375,
+                "right": 1331.2333984375,
+                "top": 102,
+                "width": 200,
+                "x": 1131.2333984375,
+                "y": 102
+            },
+            "post_job_actions": {
+                "HideDatasetActionoutput": {
+                    "action_arguments": {},
+                    "action_type": "HideDatasetAction",
+                    "output_name": "output"
+                }
+            },
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/nml/collapse_collections/collapse_dataset/5.1.0",
+            "tool_shed_repository": {
+                "changeset_revision": "90981f86000f",
+                "name": "collapse_collections",
+                "owner": "nml",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"filename\": {\"add_name\": \"false\", \"__current_case__\": 1}, \"input_list\": {\"__class__\": \"ConnectedValue\"}, \"one_header\": \"false\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "5.1.0",
+            "type": "tool",
+            "uuid": "a6e140e4-d069-45e1-bf08-7a4111e9c1f5",
+            "workflow_outputs": []
+        },
+        "3": {
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/nml/collapse_collections/collapse_dataset/5.1.0",
+            "errors": null,
+            "id": 3,
+            "input_connections": {
+                "input_list": {
+                    "id": 1,
+                    "output_name": "irma_json"
+                }
+            },
+            "inputs": [],
+            "label": "IRMA json",
+            "name": "Collapse Collection",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "bottom": 358.8000030517578,
+                "height": 112.80000305175781,
+                "left": 1131,
+                "right": 1331,
+                "top": 246,
+                "width": 200,
+                "x": 1131,
+                "y": 246
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/nml/collapse_collections/collapse_dataset/5.1.0",
+            "tool_shed_repository": {
+                "changeset_revision": "90981f86000f",
+                "name": "collapse_collections",
+                "owner": "nml",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"filename\": {\"add_name\": \"false\", \"__current_case__\": 1}, \"input_list\": {\"__class__\": \"ConnectedValue\"}, \"one_header\": \"false\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "5.1.0",
+            "type": "tool",
+            "uuid": "8325f3c1-4cb5-4a23-85a4-ae161d788fe1",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "0fc679ea-e13b-4adf-825c-33b3dc24071c"
+                }
+            ]
+        },
+        "4": {
+            "annotation": "",
+            "content_id": "fluj",
+            "errors": null,
+            "id": 4,
+            "input_connections": {
+                "irma_json": {
+                    "id": 3,
+                    "output_name": "output"
+                },
+                "librarytype": {
+                    "id": 2,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": null,
+            "name": "FLUJ",
+            "outputs": [
+                {
+                    "name": "fluflow_type",
+                    "type": "json"
+                }
+            ],
+            "position": {
+                "bottom": 352.56666564941406,
+                "height": 122.80000305175781,
+                "left": 1527.300048828125,
+                "right": 1727.300048828125,
+                "top": 229.76666259765625,
+                "width": 200,
+                "x": 1527.300048828125,
+                "y": 229.76666259765625
+            },
+            "post_job_actions": {
+                "ChangeDatatypeActionfluflow_type": {
+                    "action_arguments": {
+                        "newtype": "json"
+                    },
+                    "action_type": "ChangeDatatypeAction",
+                    "output_name": "fluflow_type"
+                },
+                "RenameDatasetActionfluflow_type": {
+                    "action_arguments": {
+                        "newname": "fluflow_type.json"
+                    },
+                    "action_type": "RenameDatasetAction",
+                    "output_name": "fluflow_type"
+                }
+            },
+            "tool_id": "fluj",
+            "tool_state": "{\"irma_json\": {\"__class__\": \"ConnectedValue\"}, \"librarytype\": {\"__class__\": \"ConnectedValue\"}, \"region\": \"\", \"sequenced_region\": {\"__class__\": \"ConnectedValue\"}, \"strain\": \"\", \"year\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "1.0",
+            "type": "tool",
+            "uuid": "83049c7b-31a0-42ee-b84d-0775a1a9b77b",
+            "workflow_outputs": [
+                {
+                    "label": "fluflow_type",
+                    "output_name": "fluflow_type",
+                    "uuid": "029f6b44-2070-488e-bfca-e4bb6bff02cf"
+                }
+            ]
+        }
+    },
+    "tags": [
+        "iridaplus"
+    ],
+    "uuid": "818011f3-11b1-4a9e-be7e-284557a7f019",
+    "version": 7
+}
