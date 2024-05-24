@@ -37,6 +37,7 @@ def get_subtype(input_file):
 def __main__():
     parser = argparse.ArgumentParser()
     parser.add_argument('--irma', dest='irma', help='irma command')
+    parser.add_argument('--consensus', dest='consensus', help='consensus')
     parser.add_argument('--irma_json', dest='irma_json', help='irma_json')
     parser.add_argument('--consensus_HA', dest='consensus_HA', help='consensus_HA')
     parser.add_argument('--consensus_NA', dest='consensus_NA', help='consensus_NA')
@@ -48,7 +49,11 @@ def __main__():
     parser.add_argument('--consensus_NS', dest='consensus_NS', help='consensus_NS')
 
     args = parser.parse_args()
-    subprocess.run(args.irma, shell=True)
+    if args.irma == "NO_IRMA":
+        os.mkdir("outdir", shell=True)
+        subprocess.run("awk '/^>/ {out = ""outdir/"" substr($1, 2) "".fasta""; print > out} !/^>/ {print >> out}' " + args.consensus, shell=True)
+    else:
+        subprocess.run(args.irma, shell=True)
 
     # copy fasta files and create the irma_json file
     influenza_type_str = 'ND'

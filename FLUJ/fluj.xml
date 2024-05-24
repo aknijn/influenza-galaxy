@@ -14,6 +14,7 @@
       --strain $strain --librarytype $librarytype
       --region '$region' --year $year
 	  --irma_json $irma_json
+	  --clade $clade
       --flu_json $fluflow_type
 ]]>
     </command>
@@ -24,6 +25,7 @@
         <param name="year" type="text" label="Sample Year" />
         <param name="librarytype" format="txt" type="data" label="library type" />
         <param name="irma_json" format="json" type="data" label="irma_json" />
+        <param name="clade" format="tsv" type="data" label="clade" />
    </inputs>
 
     <outputs>
