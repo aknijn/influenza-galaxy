@@ -30,6 +30,7 @@ def main():
     parser.add_argument('--year', dest='year', help='year')
     parser.add_argument('--irma_json', dest='irma_json', help='irma json')
     parser.add_argument('--clade', dest='clade', help='nextclade clade')
+    parser.add_argument('--clade_json', dest='clade_json', help='clade json')
     parser.add_argument('--flu_json', dest='flu_json', help='output json')
     
     args = parser.parse_args()
@@ -67,6 +68,9 @@ def main():
         if os.path.getsize(args.irma_json) != 0:
             with open(args.irma_json, "rb") as irma_infile:
                 report_data.update(json.load(irma_infile))
+        if os.path.getsize(args.clade_json) != 0:
+            with open(args.clade_json, "rb") as clade_infile:
+                report_data.update(json.load(clade_infile))
         if report_data["sequenced_region"] != 'ALL':
             report_data["qc_status"] = 'Failed'
         else:
