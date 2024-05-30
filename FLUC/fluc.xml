@@ -20,7 +20,7 @@
     </inputs>
 
     <outputs>
-        <data format="tsv" name="clade_json" label="${tool.name} on ${on_string}" />
+        <data format="tsv" name="clade" label="${tool.name} on ${on_string}" />
         <data name="clade_json" format="json" label="${tool.name} on ${on_string}: clade_json json" />
    </outputs>
 </tool>
