@@ -31,12 +31,12 @@ def main():
     args = parser.parse_args()
 
     subprocess.run("blastn -query " + args.ha_consensus + " -db " + TOOL_DIR + "/data/HA_Flu -task blastn -evalue 0.001 -out blast_ha -outfmt '6 sseqid' -strand both -dust yes -max_target_seqs 1 -perc_identity 95.0", shell=True)
-    with open('blast_ha', 'r') as blast_file:
-        matching_ref = next(blast_file).strip()
-    if len(matching_ref) > 0:
-        matching_dataset = clademap.get(matching_ref)
-        subprocess.run("nextclade dataset get --name=" + matching_dataset + " --output-dir=data", shell=True)
-        subprocess.run("nextclade run " + args.ha_consensus + " --input-dataset=data --output-tsv=" + args.clade + " --output-all=nextclade/", shell=True)
+    if os.path.getsize(blast_ha):
+        with open('blast_ha', 'r') as blast_file:
+            matching_ref = next(blast_file).strip()
+            matching_dataset = clademap.get(matching_ref)
+            subprocess.run("nextclade dataset get --name=" + matching_dataset + " --output-dir=data", shell=True)
+            subprocess.run("nextclade run " + args.ha_consensus + " --input-dataset=data --output-tsv=" + args.clade + " --output-all=nextclade/", shell=True)
 
 if __name__ == "__main__":
     main()
