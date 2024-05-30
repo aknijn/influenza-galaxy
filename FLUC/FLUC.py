@@ -31,7 +31,7 @@ def main():
     args = parser.parse_args()
 
     subprocess.run("blastn -query " + args.ha_consensus + " -db " + TOOL_DIR + "/data/HA_Flu -task blastn -evalue 0.001 -out blast_ha -outfmt '6 sseqid' -strand both -dust yes -max_target_seqs 1 -perc_identity 95.0", shell=True)
-    if os.path.getsize(blast_ha):
+    if os.path.getsize('blast_ha'):
         with open('blast_ha', 'r') as blast_file:
             matching_ref = next(blast_file).strip()
             matching_dataset = clademap.get(matching_ref)
