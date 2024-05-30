@@ -10,7 +10,6 @@
 """
 
 import argparse
-import configparser
 import sys
 import os
 import subprocess

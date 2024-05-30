@@ -54,9 +54,15 @@ def main():
 
         if os.path.getsize(args.clade) != 0:
             nextclade_result = openFileAsTable(args.clade)
-            report_data["clade"] = nextclade_result[1][2]
-            report_data["aa_mut"] = nextclade_result[1][27]
-            report_data["frame_shift"] = nextclade_result[1][26]
+            for i in range(40):
+                if nextclade_result[0][i] == "clade":
+                    report_data["clade"] = nextclade_result[1][i]
+                if nextclade_result[0][i] == "aaSubstitutions":
+                    report_data["aa_mut"] = nextclade_result[1][i]
+                if nextclade_result[0][i] == "frameShifts":
+                    report_data["frame_shift"] = nextclade_result[1][i]
+
+        report_data["ha_reference"] = "DA FARE"
 
         if os.path.getsize(args.irma_json) != 0:
             with open(args.irma_json, "rb") as irma_infile:
