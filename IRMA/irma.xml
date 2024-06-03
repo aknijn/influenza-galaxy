@@ -17,6 +17,7 @@
           #set $library = "sang"
         #else:
           #set $library = "cons"
+          #set $module = "FLU"
         #end if
         #if str( $input_pc.reverse.name ) == "dummy.fastq":
           #set $sequences = $input_pc.forward
