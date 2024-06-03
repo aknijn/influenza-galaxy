@@ -23,15 +23,9 @@ def get_subtype(input_file):
             firstline = infile.readline().strip()
             subtype = firstline[-2:]
             if subtype == 'NA':
-                if firstline[1] == 'A':
-                    subtype = 'N?'
-                else:
-                    subtype = 'N'
+                subtype = 'N'
             elif subtype == 'HA':
-                if firstline[1] == 'A':
-                    subtype = 'H?'
-                else:
-                    subtype = 'H'
+                subtype = 'H'
     return subtype
 
 def __main__():
