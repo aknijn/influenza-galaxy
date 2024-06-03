@@ -53,7 +53,7 @@
     echo $library > $librarytype &&
 
     #if not ($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1)):
-      python 
+      python3 
         $__tool_directory__/IRMA.py --irma "IRMA $irmamodule $sequences outdir" --consensus $sequences --irma_json $irma_json
           --consensus_HA $consensus_HA
           --consensus_NA $consensus_NA
