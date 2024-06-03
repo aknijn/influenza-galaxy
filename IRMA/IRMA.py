@@ -51,7 +51,8 @@ def __main__():
     args = parser.parse_args()
     if "NO_IRMA" in args.irma:
         os.mkdir("outdir")
-        subprocess.run("awk '/^>/ {out = ""outdir/"" substr($1, 2) "".fasta""; print > out} !/^>/ {print >> out}' " + args.consensus, shell=True)
+        subprocess.run("tr -d '\r' < /gfs/irida-plus/data/sequence/151/1/A_HA_H1.fasta > clean.fasta", shell=True)
+        subprocess.run("awk '/^>/ {out = ""outdir/"" substr($1, 2) "".fasta""; print > out} !/^>/ {print >> out}' clean.fasta", shell=True)
     else:
         subprocess.run(args.irma, shell=True)
 
