@@ -17,17 +17,17 @@
           #set $library = "sang"
         #else:
           #set $library = "cons"
-          #set $module = "FLU"
         #end if
         #if str( $input_pc.reverse.name ) == "dummy.fastq":
           #set $sequences = $input_pc.forward
         #else:
           #set $sequences = $input_pc.reverse
         #end if
+        #set $irmamodule = "NO_IRMA"
       #else:
         #if str( $input_pc.forward.name ).lower().endswith(".fast5") or str( $input_pc.reverse.name ).lower().endswith(".fast5"):
           #set $library = "nano"
-          #set $module = "FLU-minion"
+          #set $irmamodule = "FLU-minion"
         #else:
           #if str( $input_pc.reverse.name ) == "dummy.fastq":
             #set $seqlen = subprocess.getoutput('head -n 10000 ' + str($input_pc.forward) + ' | wc -L')
@@ -38,23 +38,23 @@
           #end if
           #if int($seqlen) > 800:
             #set $library = "nano"
-            #set $module = "FLU-minion"
+            #set $irmamodule = "FLU-minion"
           #else:
             #set $library = "iont"
-            #set $module = "FLU"
+            #set $irmamodule = "FLU"
           #end if
         #end if
       #end if
     #else:
       #set $library = "illu"
-      #set $module = "FLU"
+      #set $irmamodule = "FLU"
       #set $sequences = str($input_pc.forward) + " " + str($input_pc.reverse)
     #end if
     echo $library > $librarytype &&
 
-    #if not (($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1)) or ($library == "cons")):
+    #if not ($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1)):
       python 
-        $__tool_directory__/IRMA.py --irma "IRMA $module $sequences outdir" --consensus $sequences --irma_json $irma_json
+        $__tool_directory__/IRMA.py --irma "IRMA $irmamodule $sequences outdir" --consensus $sequences --irma_json $irma_json
           --consensus_HA $consensus_HA
           --consensus_NA $consensus_NA
           --consensus_MP $consensus_MP
@@ -63,17 +63,6 @@
           --consensus_PA $consensus_PA
           --consensus_NP $consensus_NP
           --consensus_NS $consensus_NS
-    #elif $library == "cons":
-      python 
-        $__tool_directory__/IRMA.py --irma "NO_IRMA" --consensus $sequences --irma_json $irma_json
-          --consensus_HA $consensus_HA
-          --consensus_NA $consensus_NA
-          --consensus_MP $consensus_MP
-          --consensus_PB1 $consensus_PB1
-          --consensus_PB2 $consensus_PB2
-          --consensus_PA $consensus_PA
-          --consensus_NP $consensus_NP
-          --consensus_NS $consensus_NS	
     #end if
 
 ]]>

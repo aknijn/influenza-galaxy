@@ -49,7 +49,7 @@ def __main__():
     parser.add_argument('--consensus_NS', dest='consensus_NS', help='consensus_NS')
 
     args = parser.parse_args()
-    if args.irma == "NO_IRMA":
+    if "NO_IRMA" in args.irma:
         os.mkdir("outdir", shell=True)
         subprocess.run("awk '/^>/ {out = ""outdir/"" substr($1, 2) "".fasta""; print > out} !/^>/ {print >> out}' " + args.consensus, shell=True)
     else:
