@@ -50,7 +50,7 @@ def __main__():
 
     args = parser.parse_args()
     if "NO_IRMA" in args.irma:
-        os.mkdir("outdir", shell=True)
+        os.mkdir("outdir")
         subprocess.run("awk '/^>/ {out = ""outdir/"" substr($1, 2) "".fasta""; print > out} !/^>/ {print >> out}' " + args.consensus, shell=True)
     else:
         subprocess.run(args.irma, shell=True)
