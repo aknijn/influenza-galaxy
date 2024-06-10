@@ -63,19 +63,35 @@ def main():
                 if nextclade_result[0][i] == "frameShifts":
                     report_data["frame_shift"] = nextclade_result[1][i]
 
-        report_data["ha_reference"] = "DA FARE"
-
+        irma_data = """{"sequenced_region": "ND", "h_subtype": "H", "n_subtype": "N", "influenza_type": "ND"}"""
         if os.path.getsize(args.irma_json) != 0:
             with open(args.irma_json, "rb") as irma_infile:
-                report_data.update(json.load(irma_infile))
+                irma_data = json.load(irma_infile)
+        clade_data = """{"ha_reference": "ND", "h_subtype": "H", "influenza_type": "ND"}"""
         if os.path.getsize(args.clade_json) != 0:
             with open(args.clade_json, "rb") as clade_infile:
-                report_data.update(json.load(clade_infile))
+                clade_data = json.load(clade_infile)
+        report_data["sequenced_region"] = irma_data["sequenced_region"]
+        report_data["n_subtype"] = irma_data["n_subtype"]
+        report_data["ha_reference"] = clade_data["ha_reference"]
+        if irma_data["influenza_type"] == 'A' or irma_data["influenza_type"] == 'B':
+            report_data["influenza_type"] = irma_data["influenza_type"]
+        else:
+            report_data["influenza_type"] = clade_data["influenza_type"]
+        if irma_data["h_subtype"] != 'H':
+            report_data["h_subtype"] = irma_data["h_subtype"]
+        else:
+            report_data["h_subtype"] = clade_data["h_subtype"]
         if report_data["sequenced_region"] != 'ALL':
             report_data["qc_status"] = 'Failed'
         else:
             report_data["qc_status"] = 'Passed'
+
         report_data["notifica"] = '-'
+        if clade_data["h_subtype"] == 'H':
+            report_data["notifica"] = 'BLAST senza risultato'
+        elif clade_data["h_subtype"] == 'H_yam':
+            report_data["notifica"] = 'H_yam'
 
     finally:
         report = open(args.flu_json, 'w')
