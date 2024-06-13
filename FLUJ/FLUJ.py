@@ -90,8 +90,10 @@ def main():
         report_data["notifica"] = '-'
         if clade_data["h_subtype"] == 'H':
             report_data["notifica"] = 'BLAST senza risultato'
+        elif clade_data["h_subtype"] == 'H5':
+            report_data["notifica"] = 'sottotipo H5'
         elif clade_data["h_subtype"] == 'H_yam':
-            report_data["notifica"] = 'H_yam'
+            report_data["notifica"] = 'sottotipo H_yam'
 
     finally:
         report = open(args.flu_json, 'w')
