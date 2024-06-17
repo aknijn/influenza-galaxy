@@ -49,7 +49,7 @@
     #else:
       #set $library = "illu"
       #set $irmamodule = "FLU"
-      #set $sequences = str($input_pc.forward) + " " + str($input_pc.reverse)
+      #set $sequences = str($input_pc.forward)
     #end if
     echo $library > $librarytype &&
 
