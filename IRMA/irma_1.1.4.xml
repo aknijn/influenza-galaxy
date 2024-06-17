@@ -24,8 +24,10 @@
         #else:
           #set $consensus = $input_pc.reverse
         #end if
+		#set $sequences = ""
         #set $irmamodule = "NO_IRMA"
       #else:
+	    #set $consensus = ""
         #if str( $input_pc.forward.name ).lower().endswith(".fast5") or str( $input_pc.reverse.name ).lower().endswith(".fast5"):
           #set $library = "nano"
           #set $irmamodule = "FLU-minion"
@@ -50,6 +52,7 @@
       #set $library = "illu"
       #set $irmamodule = "FLU"
       #set $sequences = str($input_pc.forward) + " " + str($input_pc.reverse)
+      #set $consensus = ""
     #end if
     echo $library > $librarytype &&
 
