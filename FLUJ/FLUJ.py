@@ -89,7 +89,7 @@ def main():
 
         report_data["notifica"] = '-'
         if clade_data["h_subtype"] == 'H':
-            report_data["notifica"] = 'BLAST senza risultato'
+            report_data["notifica"] = "l'analisi del frammento HA non è stata completata! Il campione richiede ulteriori verifiche."
         elif clade_data["h_subtype"] == 'H5':
             report_data["notifica"] = 'sottotipo H5'
         elif clade_data["h_subtype"] == 'H_yam':
