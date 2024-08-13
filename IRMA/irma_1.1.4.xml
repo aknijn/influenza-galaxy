@@ -58,7 +58,7 @@
 
     #if not ($library == "iont" and (str($input_pc.forward.name).find("_R1_")!=-1 or str($input_pc.forward.name).find("_R2_")!=-1)) or ($library == "iont" and (str($input_pc.reverse.name).find("_R1_")!=-1 or str($input_pc.reverse.name).find("_R2_")!=-1)):
     python 
-      $__tool_directory__/IRMA.py --irma "IRMA $irmamodule $sequences outdir" --consensus $consensus --irma_json $irma_json
+      $__tool_directory__/IRMA.py --irma "IRMA $irmamodule $sequences outdir -c $__tool_directory__/irma.conf" --consensus $consensus --irma_json $irma_json
           --consensus_HA $consensus_HA
           --consensus_NA $consensus_NA
           --consensus_MP $consensus_MP
