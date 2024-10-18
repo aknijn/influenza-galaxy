@@ -20,28 +20,36 @@ clademap = {
     "HA|A|H3|Darwin|EPI_ISL_1563628|A/Darwin/6/2021(H3N2)":"nextstrain/flu/h3n2/ha/EPI1857216",
     "HA|B|H_vic|Brisbane|KX058884.1|B/Brisbane/60/2008(B_vic)":"nextstrain/flu/vic/ha/KX058884",
     "HA|B|H_yam|Wisconsin|JN993010.1|B/Wisconsin/01/2010(B_yam)":"nextstrain/flu/yam/ha/JN993010",
-    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"community/moncla-lab/iav-h5/ha/all-clades"}
+    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"community/moncla-lab/iav-h5/ha/all-clades",
+    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"community/moncla-lab/iav-h5/ha/2.3.2.1",
+    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"community/moncla-lab/iav-h5/ha/2.3.4.4"}
 
 refmap = {
     "HA|A|H1|Wisconsin|MW626062.1|A/Wisconsin/588/2019(H1N1)":"MW626062.1",
     "HA|A|H3|Darwin|EPI_ISL_1563628|A/Darwin/6/2021(H3N2)":"EPI_ISL_1563628",
     "HA|B|H_vic|Brisbane|KX058884.1|B/Brisbane/60/2008(B_vic)":"KX058884.1",
     "HA|B|H_yam|Wisconsin|JN993010.1|B/Wisconsin/01/2010(B_yam)":"JN993010.1",
-    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"AF144305.1"}
+    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"AF144305.1",
+    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"EPI_ISL_424984",
+    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"EPI_ISL_1846961"}
 
 typemap = {
     "HA|A|H1|Wisconsin|MW626062.1|A/Wisconsin/588/2019(H1N1)":"A",
     "HA|A|H3|Darwin|EPI_ISL_1563628|A/Darwin/6/2021(H3N2)":"A",
     "HA|B|H_vic|Brisbane|KX058884.1|B/Brisbane/60/2008(B_vic)":"B",
     "HA|B|H_yam|Wisconsin|JN993010.1|B/Wisconsin/01/2010(B_yam)":"B",
-    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"A"}
+    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"A",
+    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"A",
+    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"A"}
 
 subtypemap = {
     "HA|A|H1|Wisconsin|MW626062.1|A/Wisconsin/588/2019(H1N1)":"H1",
     "HA|A|H3|Darwin|EPI_ISL_1563628|A/Darwin/6/2021(H3N2)":"H3",
     "HA|B|H_vic|Brisbane|KX058884.1|B/Brisbane/60/2008(B_vic)":"H_vic",
     "HA|B|H_yam|Wisconsin|JN993010.1|B/Wisconsin/01/2010(B_yam)":"H_yam",
-    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"H5"}
+    "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"H5",
+    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"H5",
+    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"H5"}
 
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
   
