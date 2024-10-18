@@ -30,8 +30,8 @@ refmap = {
     "HA|B|H_vic|Brisbane|KX058884.1|B/Brisbane/60/2008(B_vic)":"KX058884.1",
     "HA|B|H_yam|Wisconsin|JN993010.1|B/Wisconsin/01/2010(B_yam)":"JN993010.1",
     "HA|A|H5|Guangdong|AF144305.1|A/Goose/Guangdong/1/96(H5N1)":"AF144305.1",
-    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"EPI_ISL_424984",
-    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"EPI_ISL_1846961"}
+    "HA|H5|2.3.2.1|EPI_ISL_136169|A/duck/Vietnam/NCVD-1584/2012|Jang,_Yunho(H5N1)":"EPI_ISL_136169",
+    "HA|A|H5|2.3.4.4|EPI_ISL_1038924|A/Astrakhan/3212/2020|Susloparov,_Ivan(H5N8)":"EPI_ISL_1038924"}
 
 typemap = {
     "HA|A|H1|Wisconsin|MW626062.1|A/Wisconsin/588/2019(H1N1)":"A",
