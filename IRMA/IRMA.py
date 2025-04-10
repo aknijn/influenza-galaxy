@@ -19,7 +19,7 @@ import glob
 def get_subtype(input_file, in_subtype):
     subtype = in_subtype
     if os.stat(input_file).st_size > 0:
-        with open(input_file) as infile:
+        with open(input_file, 'r') as infile:
             firstline = infile.readline().strip()
             subtype_fasta = firstline[-3:]
             subtype_fasta = subtype_fasta.replace("_", "")
@@ -29,10 +29,19 @@ def get_subtype(input_file, in_subtype):
                 subtype = subtype_fasta
     return subtype
 
+def set_samplename(input_file, in_samplename):
+    if os.stat(input_file).st_size > 0:
+        with open(input_file, 'r') as infile:
+            file_content = infile.read()
+        file_content = file_content.replace(">", ">" + in_samplename)
+        with open(input_file, 'w') as ofile:
+            ofile.write(file_content)
+    
 def __main__():
     parser = argparse.ArgumentParser()
     parser.add_argument('--irma', dest='irma', help='irma command')
     parser.add_argument('--consensus', dest='consensus', help='consensus')
+    parser.add_argument('--strain', dest='strain', help='IRIDA sample name')
     parser.add_argument('--irma_json', dest='irma_json', help='irma_json')
     parser.add_argument('--consensus_HA', dest='consensus_HA', help='consensus_HA')
     parser.add_argument('--consensus_NA', dest='consensus_NA', help='consensus_NA')
@@ -61,36 +70,44 @@ def __main__():
         if os.path.isfile(consensus_HA[0]):
             sequenced_region_list.append('HA')
             shutil.copy(consensus_HA[0], args.consensus_HA)
+            set_samplename(args.consensus_HA, args.strain)
             h_subtype_str = get_subtype(consensus_HA[0], 'H')
         consensus_NA = glob.glob('outdir/*NA*.fasta')
         if consensus_NA and os.path.isfile(consensus_NA[0]):
             sequenced_region_list.append('NA')
             shutil.copy(consensus_NA[0], args.consensus_NA)
+            set_samplename(args.consensus_NA, args.strain)
             n_subtype_str = get_subtype(consensus_NA[0], 'N')
         consensus_MP = glob.glob('outdir/*MP*.fasta')
         if consensus_MP and os.path.isfile(consensus_MP[0]):
             sequenced_region_list.append('MP')
             shutil.copy(consensus_MP[0], args.consensus_MP)
+            set_samplename(args.consensus_MP, args.strain)
         consensus_PB1 = glob.glob('outdir/*PB1*.fasta')
         if consensus_PB1 and os.path.isfile(consensus_PB1[0]):
             sequenced_region_list.append('PB1')
             shutil.copy(consensus_PB1[0], args.consensus_PB1)
+            set_samplename(args.consensus_PB1, args.strain)
         consensus_PB2 = glob.glob('outdir/*PB2*.fasta')
         if consensus_PB2 and os.path.isfile(consensus_PB2[0]):
             sequenced_region_list.append('PB2')
             shutil.copy(consensus_PB2[0], args.consensus_PB2)
+            set_samplename(args.consensus_PB2, args.strain)
         consensus_PA = glob.glob('outdir/*PA*.fasta')
         if consensus_PA and os.path.isfile(consensus_PA[0]):
             sequenced_region_list.append('PA')
             shutil.copy(consensus_PA[0], args.consensus_PA)
+            set_samplename(args.consensus_PA, args.strain)
         consensus_NP = glob.glob('outdir/*NP*.fasta')
         if consensus_NP and os.path.isfile(consensus_NP[0]):
             sequenced_region_list.append('NP')
             shutil.copy(consensus_NP[0], args.consensus_NP)
+            set_samplename(args.consensus_NP, args.strain)
         consensus_NS = glob.glob('outdir/*NS*.fasta')
         if consensus_NS and os.path.isfile(consensus_NS[0]):
             sequenced_region_list.append('NS')
             shutil.copy(consensus_NS[0], args.consensus_NS)
+            set_samplename(args.consensus_NS, args.strain)
         if os.path.isfile('outdir/A_MP.fasta'):
             influenza_type_str = 'A'
         if os.path.isfile('outdir/B_MP.fasta'):
