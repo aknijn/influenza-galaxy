@@ -33,7 +33,7 @@ def set_samplename(input_file, in_samplename):
     if os.stat(input_file).st_size > 0:
         with open(input_file, 'r') as infile:
             file_content = infile.read()
-        file_content = file_content.replace(">", ">" + in_samplename)
+        file_content = file_content.replace(">", ">" + in_samplename + "_")
         with open(input_file, 'w') as ofile:
             ofile.write(file_content)
     
